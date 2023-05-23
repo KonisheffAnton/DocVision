@@ -7,7 +7,7 @@ namespace DocVision.Business.Interfaces
     {
         public Task CreateMailAsync(MailBusinessModel mailBusinessModel);
 
-        public Task DeleteMailAsync(Guid id);
+        public Task DeleteMailAsync(MailBusinessModel mailBusinessModel);
 
         public Task<IEnumerable<MailBusinessModel>> GetAllMailsAsync();
 

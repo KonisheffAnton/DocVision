@@ -9,20 +9,20 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Button x:Name ="btnSaveMail" Content="Save Mail" HorizontalAlignment="Left" Margin="96,333,0,0" VerticalAlignment="Top" Height="32" Width="126" Click="btnSaveMail_Click"/>
-        <TextBox x:Name ="txtMailId" Visibility="Hidden"
-                 HorizontalAlignment="Left" Margin="133,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name ="txtMailId"
+                 HorizontalAlignment="Left" Margin="34,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="221" Height="22"/>
         <TextBox x:Name ="txtSender" HorizontalAlignment="Left" Margin="133,82,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name ="txtReciever" HorizontalAlignment="Left" Margin="133,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name ="txtMailContent" HorizontalAlignment="Left" Margin="282,45,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="402" Height="125"/>
 
-        <DataGrid  x:Name ="dgMails" Margin="96,194,192,110" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
-    RowBackground="LightGray" AlternatingRowBackground="White" ItemsSource="{Binding}" CanUserAddRows="True">
+        <DataGrid x:Name="dgMails" Margin="96,194,116,110" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+          RowBackground="LightGray" AlternatingRowBackground="White" CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Mail Name" Binding="{Binding Path = Name}"/>
-                <DataGridTextColumn Header="Sender" Binding="{Binding Path = Sender}"/>
-                <DataGridTextColumn Header="Adressee" Binding="{Binding Path = Adressee}"/>
-                <DataGridTextColumn Header="Data" Binding="{Binding Path = Data}"/>
-                <DataGridTextColumn Header="Content" Binding="{Binding Path = Content}"/>
+                <DataGridTextColumn Header="Mail Name" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Sender" Binding="{Binding Sender}" />
+                <DataGridTextColumn Header="Addressee" Binding="{Binding Addressee}" />
+                <DataGridTextColumn Header="Data" Binding="{Binding Data, StringFormat=\{0:dd.MM.yyyy\}}" />
+                <DataGridTextColumn Header="Content" Binding="{Binding Content}" />
                 <DataGridTemplateColumn Header="Edit Action">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

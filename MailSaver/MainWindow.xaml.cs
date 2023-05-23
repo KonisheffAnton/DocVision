@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Windows;
 
 namespace MailSaver
@@ -26,12 +27,12 @@ namespace MailSaver
 
         private void MailLoaderBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.GetAllMails();
+            this.GetAllMailsAsync();
         }
 
-        private async void GetAllMails()
+        private async void GetAllMailsAsync()
         {
-            var response = await client.GetAsync("GetAllMails");
+            var response = await client.GetAsync("GetAllMailsAsync");
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
@@ -40,11 +41,11 @@ namespace MailSaver
             }
             else
             {
-                lblMessage.Content = "Error retrieving mails";
+                lblMessage.Content = "Failed to retrieve mail data.";
             }
         }
 
-        private async void SaveMail(MailModel mailmodel)
+        private async void SaveMailAsync(MailModel mailmodel)
         {
             try
             {
@@ -64,14 +65,15 @@ namespace MailSaver
             }
         }
 
-        private async void UpdateMail(MailModel mailmodel)
+        private async void UpdateMailAsync(MailModel mailmodel)
         {
             try
             {
-                var response = await client.PutAsJsonAsync("UpdateMail/" + mailmodel.Id, mailmodel);
+                var response = await client.PutAsJsonAsync("UpdateMailAsync", mailmodel);
                 if (response.IsSuccessStatusCode)
                 {
                     lblMessage.Content = "Mail Updated";
+                    GetAllMailsAsync();
                 }
                 else
                 {
@@ -84,11 +86,15 @@ namespace MailSaver
             }
         }
 
-        private async void DeleteMailAsync(Guid? mailId)
+        private async void DeleteMailAsync(MailModel mailModel)
         {
             try
             {
-                var response = await client.DeleteAsync("DeleteMail/" + mailId.ToString());
+                var request = new HttpRequestMessage(HttpMethod.Delete, "DeleteMail");
+                request.Content = new StringContent(JsonConvert.SerializeObject(mailModel), Encoding.UTF8, "application/json");
+
+                var response = await client.SendAsync(request);
+
                 if (response.IsSuccessStatusCode)
                 {
                     lblMessage.Content = "Mail Deleted";
@@ -106,15 +112,13 @@ namespace MailSaver
 
         private void btnDeleteMail_Click(object sender, RoutedEventArgs e)
         {
-            MailModel mail = ((FrameworkElement)sender).DataContext as MailModel;
-            this.DeleteMailAsync(mail.Id);
+            MailModel mailModel = ((FrameworkElement)sender).DataContext as MailModel;
+            this.DeleteMailAsync(mailModel);
         }
 
         private void btnSaveMail_Click(object sender, RoutedEventArgs e)
         {
-            ClearFields();
-
-            var mail = new MailModel()
+            var mailModel = new MailModel()
             {
                 Name = txtMailName.Text,
                 Sender = txtSender.Text,
@@ -125,13 +129,13 @@ namespace MailSaver
 
             if (string.IsNullOrEmpty(txtMailId.Text))
             {
-                mail.Id = Guid.NewGuid();
-                this.SaveMail(mail);
+                mailModel.Id = Guid.NewGuid();
+                this.SaveMailAsync(mailModel);
             }
             else
             {
-                mail.Id = Guid.Parse(txtMailId.Text.Trim());
-                this.UpdateMail(mail);
+                mailModel.Id = Guid.Parse(txtMailId.Text.Trim());
+                this.UpdateMailAsync(mailModel);
             }
 
             ClearFields();
@@ -144,6 +148,7 @@ namespace MailSaver
             MailModel mail = ((FrameworkElement)sender).DataContext as MailModel;
 
             txtMailId.Text = mail.Id.ToString();
+            txtMailName.Text = mail.Name;
             txtSender.Text = mail.Sender;
             txtReciever.Text = mail.Addressee;
             dpMailDate.SelectedDate = mail.Data;
@@ -153,6 +158,7 @@ namespace MailSaver
         private void ClearFields()
         {
             txtMailId.Text = "";
+            txtMailName.Text = "";
             txtSender.Text = "";
             txtReciever.Text = "";
             dpMailDate.SelectedDate = DateTime.Today;

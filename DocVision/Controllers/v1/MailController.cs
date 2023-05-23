@@ -51,9 +51,10 @@ namespace DocVision.WebApi.Controllers.v1
 
         [HttpDelete]
         [Route("DeleteMail")]
-        public async Task<IActionResult> DeleteMail(Guid id)
+        public async Task<IActionResult> DeleteMail(MailDto mailRequest)
         {
-            await _mailService.DeleteMailAsync(id);
+            var mailBusinessModel = _mapper.Map<MailBusinessModel>(mailRequest);
+            await _mailService.DeleteMailAsync(mailBusinessModel);
 
             return Ok();
         }
