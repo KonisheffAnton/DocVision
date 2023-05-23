@@ -1,0 +1,54 @@
+﻿<Window x:Class="MailSaver.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MailSaver"
+        
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button x:Name ="btnSaveMail" Content="Save Mail" HorizontalAlignment="Left" Margin="96,333,0,0" VerticalAlignment="Top" Height="32" Width="126" Click="btnSaveMail_Click"/>
+        <TextBox x:Name ="txtMailId" Visibility="Hidden"
+                 HorizontalAlignment="Left" Margin="133,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name ="txtSender" HorizontalAlignment="Left" Margin="133,82,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name ="txtReciever" HorizontalAlignment="Left" Margin="133,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name ="txtMailContent" HorizontalAlignment="Left" Margin="282,45,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="402" Height="125"/>
+
+        <DataGrid  x:Name ="dgMails" Margin="96,194,192,110" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+    RowBackground="LightGray" AlternatingRowBackground="White" ItemsSource="{Binding}" CanUserAddRows="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Mail Name" Binding="{Binding Path = Name}"/>
+                <DataGridTextColumn Header="Sender" Binding="{Binding Path = Sender}"/>
+                <DataGridTextColumn Header="Adressee" Binding="{Binding Path = Adressee}"/>
+                <DataGridTextColumn Header="Data" Binding="{Binding Path = Data}"/>
+                <DataGridTextColumn Header="Content" Binding="{Binding Path = Content}"/>
+                <DataGridTemplateColumn Header="Edit Action">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="btnEditMail_Click">Edit</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Delete Action">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="btnDeleteMail_Click">Delete</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name ="MailLoaderBtn" Content="Load Mails" HorizontalAlignment="Left" Margin="478,328,0,0" VerticalAlignment="Top" Height="32" Width="126" Click="MailLoaderBtn_Click"/>
+        <Label  x:Name ="lblMailContent" Content="Отправитель:" HorizontalAlignment="Left" Margin="36,78,0,0" VerticalAlignment="Top"/>
+        <Label  x:Name ="lblSender" Content="Отправитель:" HorizontalAlignment="Left" Margin="36,78,0,0" VerticalAlignment="Top"/>
+        <Label x:Name ="lblReciever" Content="Получатель:" HorizontalAlignment="Left" Margin="34,115,0,0" VerticalAlignment="Top"/>
+        <Label x:Name ="lblMaleDate" Content="Дата письма:" HorizontalAlignment="Left" Margin="38,152,0,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name ="dpMailDate" HorizontalAlignment="Left" Margin="133,152,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name ="lblMessage" Content="" HorizontalAlignment="Left" Margin="299,6,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.253,-0.064" Width="385"/>
+        <TextBox x:Name ="txtMailName" HorizontalAlignment="Left" Margin="133,45,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label  x:Name ="lblMailName" Content="Название:" HorizontalAlignment="Left" Margin="38,41,0,0" VerticalAlignment="Top"/>
+
+
+    </Grid>
+</Window>
