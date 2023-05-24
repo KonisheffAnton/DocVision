@@ -27,15 +27,6 @@ namespace DocVision.WebApi.ExeptionHandlers
 
                 switch (error)
                 {
-                    //case EntityNotFoundException e:
-                    //    _logger.LogError(error, "Custom handled {1} has occurred.", 
-                    //        typeof(EntityNotFoundException));
-                    //    response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    //    break;
-                    //case AppException e:
-                    //    _logger.LogError(error, "Custom handled AppException has occurred");
-                    //    response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    //    break;
                     default:
                         _logger.LogError(error, "Unhandled exception has occurred");
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;

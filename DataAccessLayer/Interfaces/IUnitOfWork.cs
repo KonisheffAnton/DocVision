@@ -5,8 +5,6 @@ namespace DocVision.DataAccessLayer.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepositoryBase<AccountEntity> AccountRepository { get; set; }
-
         IRepositoryBase<MailEntity> MailRepository { get; set; }
 
 

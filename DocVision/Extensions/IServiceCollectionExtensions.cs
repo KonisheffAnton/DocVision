@@ -4,7 +4,6 @@ namespace DocVision.WebApi.Extensions
 {
     public static class IServiceCollectionExtensions
     {
-
         public static void AddSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>

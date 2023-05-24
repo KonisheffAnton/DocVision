@@ -8,16 +8,13 @@ namespace DocVision.DataAccessLayer
     {
         private ApplicationDbContext _context;
 
-        public IRepositoryBase<AccountEntity> AccountRepository { get; set; }
         public IRepositoryBase<MailEntity> MailRepository { get; set; }
 
         public ApplicationUnitOfWork(ApplicationDbContext context,
-            IRepositoryBase<AccountEntity> accountRepository,
             IRepositoryBase<MailEntity> mailRepository)
 
         {
             _context = context;         
-            AccountRepository = accountRepository;
             MailRepository = mailRepository;
         }
 

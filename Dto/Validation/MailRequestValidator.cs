@@ -7,11 +7,13 @@ namespace DocVision.Dto.Validation
     {
         public MailRequestValidator()
         {
-            RuleFor(request => request.Sender).NotEmpty().NotNull();
+            RuleFor(mail => mail.Name).NotEmpty().NotNull();
 
-            RuleFor(request => request.Addressee).NotEmpty().NotNull();
+            RuleFor(mail => mail.Sender).NotEmpty().NotNull();
 
-            RuleFor(request => request.Data).NotEmpty().NotNull();
+            RuleFor(mail => mail.Addressee).NotEmpty().NotNull();
+
+            RuleFor(mail => mail.Data).NotEmpty().NotNull();
         }
     }
 }
