@@ -32,7 +32,7 @@ namespace MailSaver
 
         private async void GetAllMailsAsync()
         {
-            var response = await client.GetAsync("GetAllMailsAsync");
+            var response = await client.GetAsync("GetAllMails");
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
@@ -53,6 +53,7 @@ namespace MailSaver
                 if (response.IsSuccessStatusCode)
                 {
                     lblMessage.Content = "Mail Created";
+                    ClearFields();
                 }
                 else
                 {
@@ -69,7 +70,7 @@ namespace MailSaver
         {
             try
             {
-                var response = await client.PutAsJsonAsync("UpdateMailAsync", mailmodel);
+                var response = await client.PutAsJsonAsync("UpdateMail", mailmodel);
                 if (response.IsSuccessStatusCode)
                 {
                     lblMessage.Content = "Mail Updated";
@@ -97,6 +98,7 @@ namespace MailSaver
 
                 if (response.IsSuccessStatusCode)
                 {
+                    GetAllMailsAsync();
                     lblMessage.Content = "Mail Deleted";
                 }
                 else
@@ -137,8 +139,6 @@ namespace MailSaver
                 mailModel.Id = Guid.Parse(txtMailId.Text.Trim());
                 this.UpdateMailAsync(mailModel);
             }
-
-            ClearFields();
         }
 
         void btnEditMail_Click(object sender, RoutedEventArgs e)

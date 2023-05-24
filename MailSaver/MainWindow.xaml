@@ -4,12 +4,36 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MailSaver"
-        
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
+    <Window.Resources>
+        <ControlTemplate x:Key="validationFailed">
+            <StackPanel Orientation="Horizontal">
+                <Border BorderBrush="Violet" BorderThickness="2">
+                    <AdornedElementPlaceholder />
+                </Border>
+                <TextBlock Foreground="Red" FontSize="26" FontWeight="Bold">!</TextBlock>
+            </StackPanel>
+        </ControlTemplate>
+        
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                Value="{Binding RelativeSource={RelativeSource Self},
+                    Path=(Validation.Errors)[0].ErrorContent}" />
+                    <Setter Property="Foreground" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+
     <Grid>
+        
         <Button x:Name ="btnSaveMail" Content="Save Mail" HorizontalAlignment="Left" Margin="96,333,0,0" VerticalAlignment="Top" Height="32" Width="126" Click="btnSaveMail_Click"/>
-        <TextBox x:Name ="txtMailId"
+        <TextBox x:Name ="txtMailId" Visibility="Hidden"
                  HorizontalAlignment="Left" Margin="34,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="221" Height="22"/>
         <TextBox x:Name ="txtSender" HorizontalAlignment="Left" Margin="133,82,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name ="txtReciever" HorizontalAlignment="Left" Margin="133,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
@@ -39,15 +63,24 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name ="MailLoaderBtn" Content="Load Mails" HorizontalAlignment="Left" Margin="478,328,0,0" VerticalAlignment="Top" Height="32" Width="126" Click="MailLoaderBtn_Click"/>
+        <Button x:Name ="MailLoaderBtn" Content="Load Mails" HorizontalAlignment="Left" Margin="243,333,0,0" VerticalAlignment="Top" Height="32" Width="126" Click="MailLoaderBtn_Click"/>
         <Label  x:Name ="lblMailContent" Content="Отправитель:" HorizontalAlignment="Left" Margin="36,78,0,0" VerticalAlignment="Top"/>
         <Label  x:Name ="lblSender" Content="Отправитель:" HorizontalAlignment="Left" Margin="36,78,0,0" VerticalAlignment="Top"/>
         <Label x:Name ="lblReciever" Content="Получатель:" HorizontalAlignment="Left" Margin="34,115,0,0" VerticalAlignment="Top"/>
         <Label x:Name ="lblMaleDate" Content="Дата письма:" HorizontalAlignment="Left" Margin="38,152,0,0" VerticalAlignment="Top"/>
         <DatePicker x:Name ="dpMailDate" HorizontalAlignment="Left" Margin="133,152,0,0" VerticalAlignment="Top" Width="120"/>
         <Label x:Name ="lblMessage" Content="" HorizontalAlignment="Left" Margin="299,6,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.253,-0.064" Width="385"/>
-        <TextBox x:Name ="txtMailName" HorizontalAlignment="Left" Margin="133,45,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label  x:Name ="lblMailName" Content="Название:" HorizontalAlignment="Left" Margin="38,41,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name ="txtMailName" HorizontalAlignment="Left" Margin="133,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
+                 Validation.ErrorTemplate="{StaticResource validationFailed}">
+            <TextBox.Text>
+                <Binding Path="Name">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+                <Label  x:Name ="lblMailName" Content="Название:" HorizontalAlignment="Left" Margin="38,41,0,0" VerticalAlignment="Top"/>
 
 
     </Grid>

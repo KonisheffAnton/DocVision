@@ -13,7 +13,7 @@ namespace DocVision.DataAccessLayer.DatabaseSetter
     {
         public static void RegisterDataAccess(this IServiceCollection services, IConfiguration configuration)
         {
-            var appDbConnectionString = configuration.GetConnectionString("SQLExpressSQLAuth");
+            var appDbConnectionString = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(appDbConnectionString));
             services.AddScoped<IRepositoryBase<MailEntity>, MailRepository>();
             services.AddScoped<IUnitOfWork, ApplicationUnitOfWork>();
